@@ -1,0 +1,24 @@
+version: "3"
+services:
+  app:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql_server
+    environment:
+      DB_HOST: mysql_server
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_DATABASE: notes_db
+
+  mysql_server:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: notes_db
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
