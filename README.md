@@ -1,6 +1,10 @@
 # Express + MySQL + TypeScript + Docker
 
+This is an example of a docker container node api using mysql as a database. The API is around a notes CRUD.
+
 ## 🔧 Installation and Setup
+
+**Make sure you have Docker and Docker Compose installed and running**
 
 Clone the repository
 
