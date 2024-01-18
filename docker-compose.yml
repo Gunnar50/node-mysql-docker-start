@@ -3,7 +3,7 @@ services:
   app:
     build: .
       # context: .
-      # dockerfile: Dockerfile - this is redundant, but useful if you move the dockerfile from the root
+      # dockerfile: Dockerfile - this is redundant in this case, but useful if you move the dockerfile from the root
       # args:
       #   PORT: $APP_PORT - how we pass an env var to the image using compose
     volumes:
