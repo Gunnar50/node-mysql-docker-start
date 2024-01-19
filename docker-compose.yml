@@ -1,25 +1,35 @@
-version: "3"
+version: "3" # use latest version. I think it's 3.8
 services:
   app:
     build: .
+      # context: .
+      # dockerfile: Dockerfile - this is redundant in this case, but useful if you move the dockerfile from the root
+      # args:
+      #   PORT: $APP_PORT - how we pass an env var to the image using compose
     volumes:
-      - .:/usr/app
+      - .:/usr/app # Love me a cheeky bind mount. Should the mysql folder be included though?
       - /usr/app/node_modules
     ports:
-      - "3000:3000"
-    command: npm start
+      - "3000:3000" # You cannot assume port 3000 on the host is free. Make the host port an env var
+    command: npm start # You specify this in the dockerfile. Definitely good to be specific though
     depends_on:
-      - mysql_server
+      - mysql_server # It's kinda redundant and slightly incorrect to refer to this as a server. Probs change server to db
     environment:
-      DB_HOST: mysql_server
+      DB_HOST: mysql_server # All of these should be env vars, maybe except notes_db
       DB_USER: root
       DB_PASSWORD: password
       DB_DATABASE: notes_db
 
   mysql_server:
-    image: mysql:5.7
+    image: mysql:5.7 # Why this version of mysql? Latest major is 8
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password # same as above environment block
       MYSQL_DATABASE: notes_db
     volumes:
       - ./mysql:/docker-entrypoint-initdb.d
+
+# You'll want a volumes key for the volume mount IRL. 
+# At the moment, you're binding the mysql folder in the 
+# container which might produce weirdness when using this starter
+
+# You should also have a network key. Using the default docker network is kinda a big no no in production

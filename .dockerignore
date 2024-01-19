@@ -1,2 +1,4 @@
 node_modules;
 npm - debug.log.env.git.gitignore.dockerignore;
+
+# This needs more stuff. Do we need nodemon.json, readme etc in the image?
